@@ -155,7 +155,7 @@ We present an example of variational problem synthesis and the reward-shaping st
 
 ### ⚙️ Setup
 
-We recommend using [Conda](https://docs.conda.io/projects/miniconda) to manage your environment. We use [vLLM](https://github.com/vllm-project/vllm) (0.1.4) to accelerate inference. Run the following commands to setup your environment:
+We recommend using [Conda](https://docs.conda.io/projects/miniconda) to manage your environment. We use [vLLM](https://github.com/vllm-project/vllm) (0.10.0) to accelerate inference. Run the following commands to setup your environment:
 
 ```sh
 git git@github.com:MasterVito/SvS.git && cd SvS
