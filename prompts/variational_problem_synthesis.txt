@@ -1,0 +1,23 @@
+As an expert in educational assessment and mathematical problem synthesis, carefully examine the following model-generated response:
+
+<response>
+{REPLACE}
+</response>
+
+The solution is assured to be correct. Your goal is to generate variants for the original problem that would most plausibly elicit such a response. To achieve this, carefully follow these steps:
+
+1. Identify the topic and context indicated by the response.
+2. Infer the type of reasoning or calculation involved (e.g., numerical calculation, conceptual explanation, comparison, opinion).
+3. Determine the most likely educational purpose or learning objective behind the problem.
+
+Based on your analysis, write a clear, concise, and natural-sounding original problem in English that satisfies the following criteria:
+
+- Precisely aligns with the provided response.
+- Reflects a realistic problem that could appear in an educational context or standard curriculum.
+- Is explicit, measurable, and unambiguous.
+
+Provide your final synthetic problem formatted strictly as:
+
+```text
+[Your synthetic problem here]
+```
