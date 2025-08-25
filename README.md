@@ -170,7 +170,7 @@ pip install -r requirements.txt
 We provide a script for inference, simply config the `model_name_or_path` and `data_path` (default as using MATH-500 and AIME24 & AIME25 for evaluation) in [scripts/evaluation.sh](scripts/evaluation.sh) and run the following command:
 
 ```sh
-scripts/evaluation.sh
+bash scripts/evaluation.sh
 ```
 
 ### ⚡️ Training
