@@ -19,6 +19,7 @@ from typing import Callable, Optional
 
 import psutil
 import torch
+import multiprocessing as mp
 from transformers import PreTrainedTokenizer
 
 from verl import DataProto
@@ -38,6 +39,44 @@ async def single_compute_score(evaluation_func, completion, reference, task, tas
     except Exception as e:
         print(f"[Error] Task failed: {e}, completion: {completion[:80]}")
         return None  # Default value for failed rows
+    
+
+def _run_eval(evaluation_func, task, completion, reference, task_extra_info, conn):
+    """Run in subprocess and return result through pipe."""
+    try:
+        result = evaluation_func(task, completion, reference, task_extra_info)
+        conn.send(result)
+    except Exception as e:
+        conn.send(None)
+    finally:
+        conn.close()
+
+
+async def single_compute_score_hard_kill(evaluation_func, completion, reference, task, task_extra_info, timeout=300.):
+    """Fully safe hard-timeout evaluator."""
+    parent_conn, child_conn = mp.Pipe(duplex=False)
+
+    p = mp.Process(
+        target=_run_eval,
+        args=(evaluation_func, task, completion, reference, task_extra_info, child_conn)
+    )
+    p.start()
+
+    # non-blocking check using asyncio loop.run_in_executor()
+    loop = asyncio.get_running_loop()
+    try:
+        result = await asyncio.wait_for(
+            loop.run_in_executor(None, parent_conn.recv),
+            timeout=timeout
+        )
+    except asyncio.TimeoutError:
+        print(f"[HARD KILL] Timeout > {timeout}s, killing process for completion: {completion[:80]}")
+        p.kill()
+        p.join()
+        return None
+
+    p.join()
+    return result
 
 
 async def parallel_compute_score_async(evaluation_func, completions, references, tasks, extra_info=None, num_processes=64):
@@ -48,7 +87,13 @@ async def parallel_compute_score_async(evaluation_func, completions, references,
         # to prevent very occasional starvation caused by some anomalous programs ( like infinite loop ), the exceptions in async programs will instantly halt the evaluation, and all summoned processes will be killed.
         try:
             # Create tasks for all rows
-            tasks_async = [single_compute_score(evaluation_func, c, r, t, ei, executor, timeout=60.0) for c, r, t, ei in zip(completions, references, tasks, extra_info)]
+            # tasks_async = [single_compute_score(evaluation_func, c, r, t, ei, executor, timeout=60.0) for c, r, t, ei in zip(completions, references, tasks, extra_info)]
+            # results = await asyncio.gather(*tasks_async, return_exceptions=False)
+            tasks_async = [
+                # single_compute_score(evaluation_func, c, r, t, ei, executor, timeout=300.)
+                single_compute_score_hard_kill(evaluation_func, c, r, t, ei, timeout=60.)
+                for c, r, t, ei in zip(completions, references, tasks, extra_info, strict=True)
+            ]
             results = await asyncio.gather(*tasks_async, return_exceptions=False)
         except Exception as e:
             print(f"[Exception] async gather failed: {e}")
@@ -57,15 +102,17 @@ async def parallel_compute_score_async(evaluation_func, completions, references,
             terminated_count = 0
             for pid, proc in executor._processes.items():
                 try:
-                    # p = psutil.Process(pid)
-                    # p.terminate()
-                    # try:
-                    #     p.wait(timeout=5)
-                    # except psutil.TimeoutExpired:
-                    #     p.kill()
                     p = psutil.Process(pid)
-                    p.kill()
+                    p.terminate()
+                    try:
+                        p.wait(timeout=5)
+                    except psutil.TimeoutExpired:
+                        p.kill()
                     terminated_count += 1
+
+                    # p = psutil.Process(pid)
+                    # p.kill()
+                    # terminated_count += 1
                 except Exception:
                     pass
             print(f"[Shutdown] {terminated_count} subprocess(es) terminated.")

@@ -15,7 +15,7 @@ SvS: Self-play with Variational problem Synthesis</span>
 
 <p align="center">
   <a href="https://mastervito.github.io/SvS.github.io/"><b>[🌐 Website]</b></a> •
-  <a href="https://huggingface.co/datasets/RLVR-SvS/Variational-DAPO"><b>[🤗 Dataset]</b></a> •
+  <a href="https://huggingface.co/datasets/RLVR-SvS"><b>[🤗 Open Source]</b></a> •
   <a href="https://arxiv.org/pdf/2508.14029v1"><b>[📜 Paper]</b></a> •
   <a href="https://github.com/MasterVito/SvS"><b>[🐱 GitHub]</b></a> •
   <a href="https://x.com/MasterVito0601/status/1959960582670766411"><b>[🐦 Twitter]</b></a> •
@@ -47,6 +47,7 @@ Repo for "<a href="https://arxiv.org/pdf/2508.14029v1" target="_blank">Beyond Pa
 <!-- - [2023/10/13] 🔥🔥🔥 We release a demo for ToRA at [🐯 Gradio](https://9557c5365a6f44dc84.gradio.live), try it out!!! -->
 <!-- - [2023/06/13] We release all prompts used in the SwS framework in <a href="https://github.com/MasterVito/SwS/tree/master/prompts"><b>prompts</b></a>.
 - [2023/06/13] We update the demo set of synthetic problems from SwS in <a href="https://github.com/MasterVito/SwS/tree/master/datasets"><b>datasets</b></a>, including 500 samples for each model and category. You can also find them in <a href="https://huggingface.co/datasets/MasterVito/SwS-Demo-Dataset"><b>Demo Dataset</b></a>. -->
+- [2025/12/13] 🔥🔥🔥 **We open-sourced three SvS model checkpoints at different scales, along with an additional 7B checkpoint for coding tasks, available at <a href="https://huggingface.co/datasets/RLVR-SvS"><b>[Models]</b></a>. Training parquet data are attached in the respective repos.**
 - [2025/08/25] **We provide the full code for training and evaluation for SvS.**
 - [2025/08/19] **Our full code and datasets are under review by Microsoft and will be released upon approval.**
 - [2025/08/19] SwS paper, repo, website and datasets (variational <a href="https://github.com/MasterVito/SwS/tree/master/prompts">DAPO-17k</a>) released.

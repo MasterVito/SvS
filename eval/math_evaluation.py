@@ -19,7 +19,7 @@ def eval_accuracy(sample):
     '''Getting accuracy from predictions'''
     accs = []
     for pred in sample['prediction']:
-        acc_compute_score = compute_score(sample['ref_answer'], pred)[0]
+        acc_compute_score = compute_score(pred, sample['ref_answer'])[0]
         print(acc_compute_score)
         acc = 1.0 if acc_compute_score else 0.0
         accs.append(acc)
