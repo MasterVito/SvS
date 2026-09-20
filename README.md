@@ -205,7 +205,3 @@ If you find this repository helpful, please consider citing our paper:
 
 ## 🙏 Acknowledgement
 We sincerely appreciate the outstanding work of [veRL](https://github.com/volcengine/verl) and [SwS](https://github.com/MasterVito/SwS). The challenging problem augmentation strategy is inspired by SwS, and the training code is adapted from the veRL repository.
-
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=mastervito/SvS&type=Date)](https://star-history.com/#mastervito/SwS&Date)
