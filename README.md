@@ -14,7 +14,7 @@ SvS: Self-play with Variational problem Synthesis</span>
 </div>
 
 <p align="center">
-  <a href="https://mastervito.github.io/SvS.github.io/"><b>[🌐 Website]</b></a> •
+  <a href="https://mastervito.github.io/SvS/"><b>[🌐 Website]</b></a> •
   <a href="https://huggingface.co/RLVR-SvS"><b>[🤗 Open Source]</b></a> •
   <a href="https://arxiv.org/pdf/2508.14029v1"><b>[📜 Paper]</b></a> •
   <a href="https://github.com/MasterVito/SvS"><b>[🐱 GitHub]</b></a> •
